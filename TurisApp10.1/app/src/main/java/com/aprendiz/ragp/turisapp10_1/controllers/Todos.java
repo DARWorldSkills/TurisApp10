@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.aprendiz.ragp.turisapp10_1.R;
+import com.aprendiz.ragp.turisapp10_1.models.Lugares;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -80,27 +81,16 @@ public class Todos extends FragmentActivity implements OnMapReadyCallback {
         mMap = googleMap;
 
         mMap.getUiSettings().setZoomControlsEnabled(true);
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST);
-
-            return;
-        }
-        mMap.setMyLocationEnabled(true);
-
-        //miUbicacion();
-
-        LatLng sid = new LatLng(2.475612, -76.560533);
+        miUbicacion();
+        Lugares lugares = new Lugares();
+        lugares = Detalle.lugares;
+        LatLng sid = new LatLng(lugares.getLatitud(), lugares.getLongitud());
         mMap.addMarker(new MarkerOptions().position(sid).title("hola"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sid));
 
 
-        LatLng sydney1 = new LatLng(2.477889, -76.558673);
-        mMap.addMarker(new MarkerOptions().position(sydney1).title("hola"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney1));
-
-        String url = getRequestUrl(sid, sydney1);
-
+        String url = getRequestUrl( new LatLng(location.getLatitude(), location.getLongitude()),sid );
         TaskRequestDirections taskRequestDirections = new TaskRequestDirections();
         taskRequestDirections.execute(url);
 
