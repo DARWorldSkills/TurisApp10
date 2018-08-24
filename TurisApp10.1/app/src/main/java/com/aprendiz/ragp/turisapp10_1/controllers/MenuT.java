@@ -1,5 +1,7 @@
 package com.aprendiz.ragp.turisapp10_1.controllers;
 
+import android.annotation.SuppressLint;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -27,6 +29,7 @@ public class MenuT extends AppCompatActivity
 
     public static Lugares lugares = new Lugares();
 
+    @SuppressLint("ResourceAsColor")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +51,10 @@ public class MenuT extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setItemIconTintList(null);
+        navigationView.setItemTextColor(ColorStateList.valueOf(R.color.cafe));
+        navigationView.setItemTextColor(ColorStateList.valueOf(R.color.cafe));
+
     }
 
     @Override
@@ -100,10 +107,6 @@ public class MenuT extends AppCompatActivity
         } else if (id == R.id.nav_manage) {
             fragment = new SitiosFragment();
             getSupportFragmentManager().beginTransaction().replace(R.id.contenedor,fragment).commit();
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
