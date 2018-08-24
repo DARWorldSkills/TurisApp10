@@ -87,6 +87,8 @@ public class Todos extends FragmentActivity implements OnMapReadyCallback {
 
 
         String url = getRequestUr(new LatLng(location.getLatitude(), location.getLongitude()),sydney );
+        TaskRequestDirections taskRequestDirections = new TaskRequestDirections();
+        taskRequestDirections.execute(url);
     }
 
     private void miUbicacion() {
