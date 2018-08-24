@@ -52,8 +52,7 @@ public class MenuT extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setItemIconTintList(null);
-        navigationView.setItemTextColor(ColorStateList.valueOf(R.color.cafe));
-        navigationView.setItemTextColor(ColorStateList.valueOf(R.color.cafe));
+        navigationView.setItemTextColor(ColorStateList.valueOf(getColor(R.color.cafe)));
 
     }
 
@@ -98,17 +97,29 @@ public class MenuT extends AppCompatActivity
 
         if (id == R.id.nav_camera) {
             // Handle the camera action
+
+
+            getSupportActionBar().setTitle("Inicio");
         } else if (id == R.id.nav_gallery) {
             fragment = new HotelesFragment();
             getSupportFragmentManager().beginTransaction().replace(R.id.contenedor,fragment).commit();
-            
+
+            getSupportActionBar().setTitle("Hoteles");
+
 
         } else if (id == R.id.nav_slideshow) {
             fragment = new RestaurantesFragment();
             getSupportFragmentManager().beginTransaction().replace(R.id.contenedor,fragment).commit();
+
+            getSupportActionBar().setTitle("Restaurantes");
+
+            getSupportActionBar().setTitle("");
         } else if (id == R.id.nav_manage) {
             fragment = new SitiosFragment();
             getSupportFragmentManager().beginTransaction().replace(R.id.contenedor,fragment).commit();
+
+
+            getSupportActionBar().setTitle("Sitios");
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
