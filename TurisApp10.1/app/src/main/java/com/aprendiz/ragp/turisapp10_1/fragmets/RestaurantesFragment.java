@@ -73,7 +73,10 @@ public class RestaurantesFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 
-        inflater.inflate(R.menu.cambiar, menu);
+        position = getActivity().getWindowManager().getDefaultDisplay().getRotation();
+        if (position== Surface.ROTATION_0 || position== Surface.ROTATION_180) {
+            inflater.inflate(R.menu.cambiar, menu);
+        }
 
         super.onCreateOptionsMenu(menu, inflater);
     }
@@ -85,7 +88,18 @@ public class RestaurantesFragment extends Fragment {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.nav_cambiar) {
-
+            switch (modo){
+                case 1:
+                    modo=2;
+                    inputAdapter();
+                    item.setIcon(getActivity().getDrawable(R.drawable.cuarto));
+                    break;
+                case 2:
+                    modo=1;
+                    inputAdapter();
+                    item.setIcon(getActivity().getDrawable(R.drawable.lista));
+                    break;
+            }
 
             return true;
         }
