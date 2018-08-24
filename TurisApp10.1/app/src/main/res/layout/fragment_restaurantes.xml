@@ -4,9 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragmets.SitiosFragment">
-
-    <!-- TODO: Update blank fragment layout -->
+    tools:context=".fragmets.RestaurantesFragment">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
@@ -31,4 +29,5 @@
         android:src="@android:drawable/ic_input_add"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
 </android.support.constraint.ConstraintLayout>
