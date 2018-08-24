@@ -16,8 +16,10 @@ import android.view.MenuItem;
 
 import com.aprendiz.ragp.turisapp10_1.R;
 import com.aprendiz.ragp.turisapp10_1.fragmets.HotelesFragment;
+import com.aprendiz.ragp.turisapp10_1.fragmets.InicioFragment;
 import com.aprendiz.ragp.turisapp10_1.fragmets.RestaurantesFragment;
 import com.aprendiz.ragp.turisapp10_1.fragmets.SitiosFragment;
+import com.aprendiz.ragp.turisapp10_1.models.Constants;
 import com.aprendiz.ragp.turisapp10_1.models.Lugares;
 
 public class MenuT extends AppCompatActivity
@@ -32,7 +34,11 @@ public class MenuT extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
+        if (Constants.inicio==0){
+            Constants.inicio=1;
+            Fragment fragment = new InicioFragment();
+            getSupportFragmentManager().beginTransaction().replace(R.id.contenedor,fragment).commit();
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -103,5 +109,11 @@ public class MenuT extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Constants.inicio=0;
     }
 }
