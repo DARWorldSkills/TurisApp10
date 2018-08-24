@@ -79,14 +79,18 @@ public class Todos extends FragmentActivity implements OnMapReadyCallback {
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        miUbicacion();
+       // miUbicacion();
         // Add a marker in Sydney and move the camera
+        LatLng sydney1 = new LatLng(-40, 161);
+        mMap.addMarker(new MarkerOptions().position(sydney1).title("Marker in Sydneyasd"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney1));
+
        LatLng sydney = new LatLng(-34, 151);
        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
 
 
-        String url = getRequestUr(new LatLng(location.getLatitude(), location.getLongitude()),sydney );
+        String url = getRequestUr(sydney,sydney1 );
         TaskRequestDirections taskRequestDirections = new TaskRequestDirections();
         taskRequestDirections.execute(url);
     }

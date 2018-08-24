@@ -1,8 +1,10 @@
 package com.aprendiz.ragp.turisapp10_1.controllers;
 
+import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,6 +23,13 @@ public class Detalle extends AppCompatActivity {
         setContentView(R.layout.activity_detalle);
         inizialite();
         inputData();
+        btnUbicacion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Detalle.this,Todos.class);
+                startActivity(intent);
+            }
+        });
 
     }
 
@@ -38,5 +47,33 @@ public class Detalle extends AppCompatActivity {
         Glide.with(this).load(lugares.getUrl()).into(imgDetalle);
 
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        inizialite();
+        inputData();
+        btnUbicacion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Detalle.this,Todos.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        inizialite();
+        inputData();
+        btnUbicacion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Detalle.this,Todos.class);
+                startActivity(intent);
+            }
+        });
     }
 }
