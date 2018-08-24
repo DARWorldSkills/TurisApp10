@@ -19,6 +19,7 @@ import com.aprendiz.ragp.turisapp10_1.R;
 import com.aprendiz.ragp.turisapp10_1.controllers.Detalle;
 import com.aprendiz.ragp.turisapp10_1.controllers.MenuT;
 import com.aprendiz.ragp.turisapp10_1.controllers.Splash;
+import com.aprendiz.ragp.turisapp10_1.maps.MapsHoteles;
 import com.aprendiz.ragp.turisapp10_1.models.AdapterT;
 import com.aprendiz.ragp.turisapp10_1.models.Lugares;
 import com.bumptech.glide.Glide;
@@ -49,6 +50,13 @@ public class HotelesFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_hoteles, container, false);
         inizialite();
         inputAdapter();
+        btnMapa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), MapsHoteles.class);
+                startActivity(intent);
+            }
+        });
         return view;
     }
 

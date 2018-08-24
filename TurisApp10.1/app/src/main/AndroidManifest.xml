@@ -42,7 +42,16 @@
             android:name=".controllers.MenuT"
             android:label="@string/title_activity_menu_t"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".controllers.Detalle"></activity>
+        <activity android:name=".controllers.Detalle" />
+        <activity
+            android:name=".maps.MapsHoteles"
+            android:label="@string/title_activity_maps_hoteles" />
+        <activity
+            android:name=".maps.MapsRestaurantes"
+            android:label="@string/title_activity_maps_restaurantes" />
+        <activity
+            android:name=".maps.MapsSitios"
+            android:label="@string/title_activity_maps_sitios"></activity>
     </application>
 
 </manifest>
