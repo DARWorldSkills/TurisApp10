@@ -1,3 +1,5 @@
+
+
 package com.aprendiz.ragp.turisapp10_1.fragmets;
 
 
@@ -9,6 +11,9 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,8 +44,35 @@ public class HotelesFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
+        setHasOptionsMenu(true);
         super.onCreate(savedInstanceState);
 
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+
+        inflater.inflate(R.menu.cambiar, menu);
+
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.nav_cambiar) {
+
+
+            return true;
+        }
+
+
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
