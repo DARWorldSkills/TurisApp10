@@ -49,7 +49,7 @@ public class Todos extends FragmentActivity implements OnMapReadyCallback {
 
     Marker marker;
 
-    double latutud = 0.0;
+    double latitud = 0.0;
     double longitud = 0.0;
 
     final int MY_LOCATION = 0;
@@ -79,22 +79,35 @@ public class Todos extends FragmentActivity implements OnMapReadyCallback {
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        miUbicacion();
-        // Add a marker in Sydney and move the camera
-       LatLng sydney = new LatLng(-34, 151);
-       mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-       mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        mMap.getUiSettings().setZoomControlsEnabled(true);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST);
+
+            return;
+        }
+        mMap.setMyLocationEnabled(true);
+
+        //miUbicacion();
+
+        LatLng sid = new LatLng(2.475612, -76.560533);
+        mMap.addMarker(new MarkerOptions().position(sid).title("hola"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(sid));
 
 
-        String url = getRequestUr(new LatLng(location.getLatitude(), location.getLongitude()),sydney );
+        LatLng sydney1 = new LatLng(2.477889, -76.558673);
+        mMap.addMarker(new MarkerOptions().position(sydney1).title("hola"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney1));
+
+        String url = getRequestUrl(sid, sydney1);
+
         TaskRequestDirections taskRequestDirections = new TaskRequestDirections();
         taskRequestDirections.execute(url);
+
     }
 
-    private void miUbicacion() {
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED)
+    private void    miUbicacion() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, MY_LOCATION);
 
         {
@@ -108,42 +121,36 @@ public class Todos extends FragmentActivity implements OnMapReadyCallback {
             }
 
             locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-            location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
             actualizarUbicacion(location);
-            locationManager.requestLocationUpdates(locationManager.GPS_PROVIDER, 1500,0, locationListener);
-
+            locationManager.requestLocationUpdates(locationManager.GPS_PROVIDER, 15000, 0, locationListener);
         }
-
-
     }
 
     private void actualizarUbicacion(Location location) {
 
-        if (location != null){
-
-            latutud = location.getLatitude();
+        if (location != null) {
+            latitud = location.getLatitude();
             longitud = location.getLongitude();
-            agregarMarcador(latutud, longitud);
-
-
+            agregarMarcador(latitud, longitud);
         }
     }
 
-    private void agregarMarcador(double latutud, double longitud) {
+    private void agregarMarcador(double latitud, double longitud) {
 
-        LatLng marca = new LatLng(latutud, longitud);
-        CameraUpdate mi = CameraUpdateFactory.newLatLngZoom(marca, 14);
-        if (marker != null)marker.remove();
-        marker = mMap.addMarker(new MarkerOptions().position(marca).title("Estas Aquí"));
-        mMap.animateCamera(mi);
-
-
+        LatLng marca = new LatLng(latitud, longitud);
+        CameraUpdate miubicacion = CameraUpdateFactory.newLatLngZoom(marca, 14);
+        if (marker != null) marker.remove();
+        marker = mMap.addMarker(new MarkerOptions().position(marca).title("Estas aquí"));
+        mMap.animateCamera(miubicacion);
     }
+
 
     LocationListener locationListener = new LocationListener() {
         @Override
         public void onLocationChanged(Location location) {
             actualizarUbicacion(location);
+
         }
 
         @Override
@@ -162,32 +169,34 @@ public class Todos extends FragmentActivity implements OnMapReadyCallback {
         }
     };
 
-
-    private String getRequestUr(LatLng origin, LatLng destino){
-
-        String str_org ="origin" + origin.latitude + "," + origin.longitude;
-        String str_destino = "destination" + destino.latitude +","+destino.longitude;
+    private String getRequestUrl(LatLng origin, LatLng destino) {
+        String str_org = "origin=" + origin.latitude + "," +origin.longitude;
+        //Value of destination
+        String str_destino = "destination=" + destino.latitude+","+destino.longitude;
+        //set value
         String sensor = "sensor=false";
+        //Mode for find direction
         String mode = "mode=driving";
-        String param = str_org +"&"+ str_destino + "&" + sensor +"&" +mode;
+        //Build the full
+        String param = str_org +"&" + str_destino + "&" +sensor+"&" + mode;
+        //Output format
         String output = "json";
-        String url = "https://maps.googleapis.com/maps/api/direction" + output + "?" +param;
-
+        //Create url request
+        String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + param;
         return url;
 
     }
 
-
     private String requestDirection(String reqUrl) throws IOException {
-
         String responseString = "";
         InputStream inputStream = null;
-        HttpURLConnection httpURLConnection= null;
-
+        HttpURLConnection httpURLConnection = null;
         try {
-            URL url =new URL(reqUrl);
-            httpURLConnection= (HttpURLConnection) url.openConnection();
+            URL url = new URL(reqUrl);
+            httpURLConnection = (HttpURLConnection) url.openConnection();
             httpURLConnection.connect();
+
+            // get the respons result
 
             inputStream = httpURLConnection.getInputStream();
             InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
@@ -195,7 +204,6 @@ public class Todos extends FragmentActivity implements OnMapReadyCallback {
 
             StringBuffer stringBuffer = new StringBuffer();
             String line = "";
-
             while ((line = bufferedReader.readLine()) != null) {
                 stringBuffer.append(line);
 
@@ -218,7 +226,6 @@ public class Todos extends FragmentActivity implements OnMapReadyCallback {
         return responseString;
 
     }
-
 
     @SuppressLint("MissingPermission")
     @Override
@@ -302,7 +309,7 @@ public class Todos extends FragmentActivity implements OnMapReadyCallback {
 
                 polylineOptions.addAll(points);
                 polylineOptions.width(15);
-                polylineOptions.color(Color.MAGENTA);
+                polylineOptions.color(Color.BLUE);
                 polylineOptions.geodesic(true);
             }
 
@@ -317,6 +324,11 @@ public class Todos extends FragmentActivity implements OnMapReadyCallback {
         }
     }
 
+    //Lugares lugares = MenuT.lugares;
+    //double lat = lugares.getLatitud();
+    //double lon = lugares.getLongitud();
 
-
+    //LatLng sydney1 = new LatLng(lat,lon);
+    //mMap.addMarker(new MarkerOptions().position(sydney1).title(MenuT.lugares.getNombre()));
+    //mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney1));
 }
