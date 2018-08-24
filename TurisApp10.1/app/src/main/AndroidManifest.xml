@@ -41,7 +41,8 @@
         <activity
             android:name=".controllers.MenuT"
             android:label="@string/title_activity_menu_t"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".controllers.Detalle"></activity>
     </application>
 
 </manifest>

@@ -1,9 +1,9 @@
 package com.aprendiz.ragp.turisapp10_1.fragmets;
 
-
+import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.os.RemoteCallbackList;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -26,11 +26,8 @@ import com.bumptech.glide.Glide;
 
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- */
-public class SitiosFragment extends Fragment {
 
+public class RestaurantesFragment extends Fragment {
     View view;
     RecyclerView recyclerView;
     FloatingActionButton btnMapa;
@@ -38,16 +35,23 @@ public class SitiosFragment extends Fragment {
     int position;
     int modo=0;
     Lugares lugares;
-    public SitiosFragment() {
+    public RestaurantesFragment() {
         // Required empty public constructor
     }
 
+
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_sitios, container, false);
+        view = inflater.inflate(R.layout.fragment_restaurantes, container, false);
         inizialite();
         inputAdapter();
         return view;
@@ -62,7 +66,7 @@ public class SitiosFragment extends Fragment {
     //Método para ingresar el adapter al recyclerview
     private void inputAdapter() {
         position = getActivity().getWindowManager().getDefaultDisplay().getRotation();
-        final List<Lugares> lugaresList = Splash.lugaresList.subList(0,9);
+        final List<Lugares> lugaresList = Splash.lugaresList.subList(17,24);
         if (position== Surface.ROTATION_0 || position== Surface.ROTATION_180){
             if (modo==0){
 
@@ -132,5 +136,6 @@ public class SitiosFragment extends Fragment {
                 break;
         }
     }
+
 
 }
